@@ -1,0 +1,103 @@
+$class-prefix: "log-in";
+$light-yellow: #fdf0c4;
+$dark-yellow: #dbcfa9;
+
+.#{$class-prefix} {
+  &_container {
+    height: 100vh;
+    background: url('../../assets/image/log_in_bg.jpg') no-repeat center / cover;
+    overflow: hidden;
+  }
+  &_content {
+    height: 100%;
+    margin-left: auto;
+    width: 40%;
+    position: relative;
+    z-index: 1;
+    box-sizing: border-box;
+    padding: 40px 100px 0;
+    color: #fff;
+    &::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: -2;
+      background: url('../../assets/image/log_in_bg.jpg') center / cover fixed;
+      filter: blur(5px);
+      margin: -5px;
+    }
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: -1;
+      background: rgba(255,255,255,0.2);
+    }
+  }
+  &_logo {
+    width: 150px;
+    display: block;
+    margin-bottom: 20px;
+  }
+  &_title {
+    font-size: 32px;
+    font-weight: 100;
+    color: #fff;
+    margin-bottom: 50px;
+  }
+  &_input-label {
+    font-size: 16px;
+    font-weight: normal;
+    color: #fff;
+    margin-bottom: 20px;
+  }
+  &_input {
+    background: rgba(255,255,255,0.3) !important;
+    margin-bottom: 20px;
+    color: #ffffff;
+    .ant-input {
+      background: rgba(255,255,255,0) !important;
+      color: #ffffff;
+    }
+    .ant-input-password-icon {
+      color: #ffffff !important;
+    }
+    &:hover,
+    &:focus,
+    & .ant-input:hover,
+    & .ant-input:focus {
+      border-color: $light-yellow !important;
+    }
+    &:focus,
+    & .ant-input:focus {
+      box-shadow: 0 0 0 2px rgba(253, 240, 196, 0.2) !important;
+    }
+  }
+  &_button {
+    margin-top: 40px;
+    margin-bottom: 40px;
+    &:hover,
+    &:focus {
+      color: $light-yellow;
+      border-color: $light-yellow;
+    }
+    &:active {
+      color: $dark-yellow;
+      border-color: $dark-yellow;
+    }
+  }
+  &_tip {
+    font-size: 14px;
+    > span {
+      color: $light-yellow;
+      cursor: pointer;
+      text-decoration: underline;
+    }
+  }
+}
