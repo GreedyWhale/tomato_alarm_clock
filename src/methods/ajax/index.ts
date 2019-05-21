@@ -1,9 +1,9 @@
 import axios from 'axios';
 import history from '../history/index';
+import { TOMATO_ALARM_CLOCK_X_TOKEN } from '../constant/index';
 
 const appId: string = 'XTrcPmPP6mK73ZgLHoXfnRef';
 const appSecret: string = 'FNhsEEYYNvPK4xt5nLG9Qfv9';
-const TOMATO_ALARM_CLOCK_X_TOKEN: string = 'TOMATO_ALARM_CLOCK_X_TOKEN';
 
 const ajax = axios.create({
   baseURL: 'https://gp-server.hunger-valley.com',

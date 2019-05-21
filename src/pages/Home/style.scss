@@ -1,0 +1,16 @@
+$class-prefix: "home";
+
+.#{$class-prefix} {
+  &-container {
+    height: 100vh;
+    background: url('../../assets/image/home_bg.jpg') no-repeat center / cover;
+    display: flex;
+    align-items: center;
+  }
+  &-main {
+    height: 100%;
+    box-sizing: border-box;
+    padding-top: 40px;
+    flex: 1;
+  }
+}

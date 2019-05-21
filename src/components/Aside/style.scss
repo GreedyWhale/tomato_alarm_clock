@@ -1,0 +1,55 @@
+$class-prefix: "aside";
+
+.#{$class-prefix} {
+  &-aside {
+    height: 100%;
+    box-sizing: border-box;
+    padding-top: 40px;
+    flex: 0 0 25%;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    padding-right: 40px;
+    padding-bottom: 40px;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: space-between;
+    text-align: right;
+    &::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: -2;
+      background: url('../../assets/image/home_bg.jpg') center / cover fixed;
+      filter: blur(5px);
+      margin: -5px;
+    }
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: -1;
+      background: rgba(0,0,0,0.3);
+    }
+  }
+  &-logo {
+    width: 150px;
+    margin-bottom: 20px;
+  }
+  &-username {
+    font-size: 32px;
+    margin-bottom: 10px;
+    font-weight: 100;
+  }
+  &-logout {
+    cursor: pointer;
+  }
+}

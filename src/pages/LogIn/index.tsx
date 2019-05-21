@@ -5,7 +5,7 @@ import logo from '../../assets/image/logo.svg';
 import { Input, Button, message } from 'antd';
 import ajax from '../../methods/ajax/index';
 
-const LogIn: React.FC<RouteComponentProps> = ({match, location, history}) => {
+const LogIn: React.FC<RouteComponentProps> = ({history}) => {
 
   const [isLogIn, setIsLogIn] = useState(true);
   const [userName, setUserName] = useState('');
@@ -50,8 +50,8 @@ const LogIn: React.FC<RouteComponentProps> = ({match, location, history}) => {
 
   const logIn = () => {
     ajax.post('/sign_in/user', {account: userName, password})
-      .then(res => {
-        console.log(res)
+      .then(() => {
+        history.push('/');
       })
       .catch(err => {
         try {
@@ -69,8 +69,8 @@ const LogIn: React.FC<RouteComponentProps> = ({match, location, history}) => {
       password,
       password_confirmation: passwordConfirmation
     })
-      .then(res => {
-        console.log(res)
+      .then(() => {
+        history.push('/');
       })
       .catch(err => {
         const {response: {data: {errors}}} = err;
