@@ -1,20 +1,29 @@
 import React, { useState, KeyboardEvent } from 'react';
+import { connect } from 'react-redux';
 import { Icon } from 'antd';
 import { Input } from 'antd';
 import './style.scss';
 import noRecord from '../../assets/image/no_record.svg';
 import TaskList from '../TaskList/index';
-import { UpdateTaskList } from '../../pages/Home/types/home.d';
-
-
+import { IState } from '../../pages/Home/types/home.d';
+import { addTask } from '../../redux/actions/index';
+import ajax from '../../methods/ajax/index';
 interface IProps {
-  postTode: (description: string) => void;
   taskList: any[];
-  updateTaskList: UpdateTaskList;
+  addTask: (task: any[]) => any;
 }
-const AddTask: React.FC<IProps> = ({postTode, taskList, updateTaskList}) => {
+const AddTask: React.FC<IProps> = ({taskList, addTask}) => {
   const [description, setDescription] = useState('');
 
+  const postTode = (description: string) => {
+    ajax.post('https://gp-server.hunger-valley.com/todos', {description})
+      .then(res => {
+        addTask(res.data.resource)
+      })
+      .catch(error => {
+        console.log(error)
+      })
+  }
   const onKeyUp = (e: KeyboardEvent) => {
     e.persist()
     if (e.keyCode === 13 && description !== '') {
@@ -50,7 +59,7 @@ const AddTask: React.FC<IProps> = ({postTode, taskList, updateTaskList}) => {
       </div>
       <div className={`${classPrefix}_task-list`}>
         {taskList.length ? (
-          <TaskList taskList={taskList} updateTaskList={updateTaskList} />
+          <TaskList />
         ) : (
           <img src={noRecord} alt="无记录" className={`${classPrefix}_norecord`} />
         )}
@@ -59,5 +68,10 @@ const AddTask: React.FC<IProps> = ({postTode, taskList, updateTaskList}) => {
   )
 }
 
-export default AddTask
+const mapStateToProps = (state: IState) => ({ taskList: state.tasks })
+const mapDispatchToProps = (dispatch: any) => ({
+  addTask: (task: any[]) => dispatch(addTask(task))
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddTask)
 

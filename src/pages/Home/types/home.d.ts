@@ -1,5 +1,5 @@
-interface UpdateTaskList {
-  (id: number, params: any): void
+interface IState {
+  tasks: any[];
 }
 
-export { UpdateTaskList }
+export { IState }
