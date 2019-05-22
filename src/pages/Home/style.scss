@@ -10,7 +10,13 @@ $class-prefix: "home";
   &-main {
     height: 100%;
     box-sizing: border-box;
-    padding-top: 40px;
     flex: 1;
+    display: flex;
+    padding: 0 40px;
+    &_box {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
   }
 }
