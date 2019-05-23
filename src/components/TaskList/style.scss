@@ -3,9 +3,25 @@ $classPrefix: 'task-list';
 .#{$classPrefix} {
   &_container {
     width: 100%;
-    height: 200px;
     overflow: auto;
     padding: 0 40px;
+    flex: 1;
+    margin-bottom: 2em;
+  }
+  &_task-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  &_norecord {
+    width: 100px;
+    margin-top: 40px;
+  }
+  &_norecord-tips {
+    margin: 30px;
+    color: #fff;
+    font-size: 24px;
+    font-weight: 200;
   }
   &_container,
   &_item {

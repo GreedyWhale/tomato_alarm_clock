@@ -3,16 +3,12 @@ import { connect } from 'react-redux';
 import { Icon } from 'antd';
 import { Input } from 'antd';
 import './style.scss';
-import noRecord from '../../assets/image/no_record.svg';
-import TaskList from '../TaskList/index';
-import { IState } from '../../pages/Home/types/home.d';
 import { addTask } from '../../redux/actions/index';
 import ajax from '../../methods/ajax/index';
 interface IProps {
-  taskList: any[];
   addTask: (task: any[]) => any;
 }
-const AddTask: React.FC<IProps> = ({taskList, addTask}) => {
+const AddTask: React.FC<IProps> = ({addTask}) => {
   const [description, setDescription] = useState('');
 
   const postTode = (description: string) => {
@@ -57,21 +53,13 @@ const AddTask: React.FC<IProps> = ({taskList, addTask}) => {
           <Icon type="unordered-list" />
         </div>
       </div>
-      <div className={`${classPrefix}_task-list`}>
-        {taskList.length ? (
-          <TaskList />
-        ) : (
-          <img src={noRecord} alt="无记录" className={`${classPrefix}_norecord`} />
-        )}
-      </div>
     </div>
   )
 }
 
-const mapStateToProps = (state: IState) => ({ taskList: state.tasks })
 const mapDispatchToProps = (dispatch: any) => ({
   addTask: (task: any[]) => dispatch(addTask(task))
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(AddTask)
+export default connect(null, mapDispatchToProps)(AddTask)
 

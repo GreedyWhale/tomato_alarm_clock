@@ -3,7 +3,7 @@ import { RouteComponentProps } from 'react-router';
 import { connect } from 'react-redux';
 import './style.scss';
 import Aside from '../../components/Aside/index';
-import AddTask from '../../components/AddTask/index';
+import Tasks from '../../components/Tasks/index';
 import ajax from '../../methods/ajax/index';
 import { TOMATO_ALARM_CLOCK_X_TOKEN } from '../../methods/constant/index';
 import { IState } from './types/home.d';
@@ -34,17 +34,13 @@ const Home: React.FC<RouteComponentProps | any> = ({history, initTasks}) => {
     history.replace('/login')
   }
   const classPrefix = 'home';
-  const style: React.CSSProperties = {
-    flex: 1
-  };
   return (
     <section className={`${classPrefix}-container`}>
       <Aside username={username} logOut={logOut} />
       <main className={`${classPrefix}-main`}>
         <div className={`${classPrefix}-main_box`}></div>
         <div className={`${classPrefix}-main_box`}>
-          <AddTask />
-          <div style={style}></div>
+          <Tasks />
         </div>
       </main>
     </section>

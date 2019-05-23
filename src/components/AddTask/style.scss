@@ -1,12 +1,6 @@
 $class-prefix: "add-task";
 
 .#{$class-prefix} {
-  &_container {
-    flex: 1;
-    background: rgba(0, 0, 0, 0.2);
-    border-radius: 4px;
-    box-sizing: border-box;
-  }
   &_top {
     padding: 0 40px;
   }
@@ -34,15 +28,5 @@ $class-prefix: "add-task";
   }
   &_input-icon {
     cursor: pointer;
-  }
-  &_task-list {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    height: 200px;
-  }
-  &_norecord {
-    width: 100px;
-    margin-top: 40px;
   }
 }
