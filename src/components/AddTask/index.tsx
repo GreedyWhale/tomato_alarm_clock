@@ -35,7 +35,7 @@ const AddTask: React.FC<IProps> = ({addTask}) => {
     onClick={() => {if (description) { postTode(description); setDescription('');}}}/>
 
   return (
-    <div className={`${classPrefix}_container`}>
+    <div>
       <div className={`${classPrefix}_top`}>
         <div className={`${classPrefix}_header`}>
           <h4 className={`${classPrefix}_title`}>添加任务</h4>

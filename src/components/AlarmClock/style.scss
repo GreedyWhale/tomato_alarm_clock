@@ -1,0 +1,19 @@
+@import '../../assets/scss/common.scss';
+
+$class-prefix: "alarm-clock";
+
+.#{$class-prefix} {
+  &_container {
+    @include container;
+    padding: 0 40px;
+  }
+  &_header {
+    @include header;
+    justify-content: center;
+    &-icon {
+      width: 30px;
+      fill: #fff;
+    }
+  }
+}
+

@@ -1,0 +1,37 @@
+$class-prefix: "circular-progress";
+
+.#{$class-prefix} {
+  &_container {
+  }
+  &_control-btns {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 60px;
+    > img {
+      width: 64px;
+      & + img {
+        margin-left: 40px;
+      }
+    }
+  }
+  &_progress {
+    display: flex;
+    justify-content: center;
+    position: relative;
+  }
+  &_circle {
+    transform-origin: 122px 122px;
+    transform: rotate(-90deg);
+    transition: stroke-dasharray .3s ease-in;
+  }
+  &_countdown {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #fff;
+    font-size: 36px;
+    font-weight: 200;
+  }
+}

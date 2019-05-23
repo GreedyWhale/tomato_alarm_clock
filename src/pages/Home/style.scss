@@ -12,9 +12,11 @@ $class-prefix: "home";
     box-sizing: border-box;
     flex: 1;
     display: flex;
+    justify-content: space-around;
+    background: rgba(0,0,0,.3);
     padding: 0 40px;
     &_box {
-      flex: 1;
+      flex: 0 0 40%;
       display: flex;
       flex-direction: column;
     }

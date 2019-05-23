@@ -1,3 +1,5 @@
+@import '../../assets/scss/common.scss';
+
 $class-prefix: "add-task";
 
 .#{$class-prefix} {
@@ -6,16 +8,7 @@ $class-prefix: "add-task";
   }
   &_tasks,
   &_header {
-    font-size: 24px;
-    color: #fff;
-    font-weight: 200;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  &_header {
-    padding-top: 40px;
-    margin-bottom: 40px;
+    @include header;
   }
   &_tasks {
     padding-top: 15px;

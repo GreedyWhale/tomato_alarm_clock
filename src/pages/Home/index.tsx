@@ -4,13 +4,13 @@ import { connect } from 'react-redux';
 import './style.scss';
 import Aside from '../../components/Aside/index';
 import Tasks from '../../components/Tasks/index';
+import AlarmClock from '../../components/AlarmClock/index';
 import ajax from '../../methods/ajax/index';
 import { TOMATO_ALARM_CLOCK_X_TOKEN } from '../../methods/constant/index';
-import { IState } from './types/home.d';
-import { initTaskList } from '../../redux/actions/index';
+import { initTaskList, initTomatoList } from '../../redux/actions/index';
 
 
-const Home: React.FC<RouteComponentProps | any> = ({history, initTasks}) => {
+const Home: React.FC<RouteComponentProps | any> = ({history, initTasks, initTomatos}) => {
   const [username, setUsername] = useState('');
 
   useEffect(() => {
@@ -18,10 +18,12 @@ const Home: React.FC<RouteComponentProps | any> = ({history, initTasks}) => {
       try {
         const result = await Promise.all([
           ajax.get('https://gp-server.hunger-valley.com/me'),
-          ajax.get('https://gp-server.hunger-valley.com/todos')
+          ajax.get('https://gp-server.hunger-valley.com/todos'),
+          ajax.get('https://gp-server.hunger-valley.com/tomatoes'),
         ])
-        setUsername(result[0].data.account)
-        initTasks(result[1].data.resources)
+        setUsername(result[0].data.account);
+        initTasks(result[1].data.resources);
+        initTomatos(result[2].data.resources)
       } catch (error) {
       }
     };
@@ -38,7 +40,9 @@ const Home: React.FC<RouteComponentProps | any> = ({history, initTasks}) => {
     <section className={`${classPrefix}-container`}>
       <Aside username={username} logOut={logOut} />
       <main className={`${classPrefix}-main`}>
-        <div className={`${classPrefix}-main_box`}></div>
+        <div className={`${classPrefix}-main_box`}>
+          <AlarmClock />
+        </div>
         <div className={`${classPrefix}-main_box`}>
           <Tasks />
         </div>
@@ -47,8 +51,8 @@ const Home: React.FC<RouteComponentProps | any> = ({history, initTasks}) => {
   )
 }
 
-const mapStateToProps = (state: IState) => ({ taskList: state.tasks })
 const mapDispatchToProps = (dispatch: any) => ({
-  initTasks: (taskList: any[]) => dispatch(initTaskList(taskList))
+  initTasks: (taskList: any[]) => dispatch(initTaskList(taskList)),
+  initTomatos: (tomatoList: any[]) => dispatch(initTomatoList(tomatoList))
 })
-export default connect(mapStateToProps, mapDispatchToProps)(Home);
+export default connect(null, mapDispatchToProps)(Home);
