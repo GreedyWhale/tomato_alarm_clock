@@ -51,7 +51,7 @@ const LogIn: React.FC<RouteComponentProps> = ({history}) => {
   const logIn = () => {
     ajax.post('/sign_in/user', {account: userName, password})
       .then(() => {
-        history.push('/');
+        history.replace('/');
       })
       .catch(err => {
         try {
@@ -70,7 +70,7 @@ const LogIn: React.FC<RouteComponentProps> = ({history}) => {
       password_confirmation: passwordConfirmation
     })
       .then(() => {
-        history.push('/');
+        history.replace('/');
       })
       .catch(err => {
         const {response: {data: {errors}}} = err;

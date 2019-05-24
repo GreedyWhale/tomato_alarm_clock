@@ -1,10 +1,12 @@
 import { combineReducers } from 'redux'
-import tasks from './tasks';
-import tomatos from './tomatos';
+import tasks from './tasksReducers';
+import tomatos from './tomatosReducers';
+import tomatoStatus from './tomatoStatusReducers';
 
 const rootReducer = combineReducers({
   tasks,
-  tomatos
+  tomatos,
+  tomatoStatus
 });
 
 export default rootReducer;

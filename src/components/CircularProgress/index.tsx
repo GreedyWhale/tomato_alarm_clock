@@ -1,10 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { Modal, Input } from 'antd';
 import { connect } from 'react-redux';
 import { IState } from '../../pages/Home/types/home.d';
 import playIcon from '../../assets/image/play.svg';
-import pauseIcon from '../../assets/image/pause.svg';
 import quitIcon from '../../assets/image/quit.svg';
 import './style.scss';
+import { setTomatoStatus as reduxSetTomatoStatus } from '../../redux/actions/tomatoStatus';
+import { addTomato as reduxAddTomato, updateTomato as reduxUpdateTomato } from '../../redux/actions/tomato';
+import ajax from '../../methods/ajax/index';
 
 const useInterval = (callback: any, delay: number | null) => {
   const savedCallback = useRef();
@@ -26,7 +29,10 @@ const useInterval = (callback: any, delay: number | null) => {
   }, [delay]);
 }
 interface IProps {
-  tomatoList: any[]
+  tomatoList: any[];
+  setTomatoStatus: (status: string) => void;
+  addTomato: (tomato: any) => void;
+  updateTomato: (tomato: any) => void;
 }
 interface ITomato {
   aborted: null | boolean;
@@ -41,33 +47,51 @@ interface ITomato {
   updated_at: string;
   user_id: number;
 }
-const CircularProgress: React.FC<IProps> = ({tomatoList}) => {
-  const totalTime: number = 1500;
+
+const CircularProgress: React.FC<IProps> = ({
+  tomatoList,
+  setTomatoStatus, addTomato,
+  updateTomato
+}) => {
+  const totalTime: number = 15;
+  const circleRadius = 120;
+  const circleLength = 2 * circleRadius * Math.PI;
   const [progress, setProgress] = useState(0);
   const [time, setTime] = useState(totalTime);
   const [minutes, setMinutes] = useState('25');
   const [seconds, setSeconds] = useState('00');
   const [isRunning, setIsRunning] = useState(false);
   const [currentTomato, setCurrentTomato] = useState<ITomato | null>(null);
-  const circleRadius = 120;
-  const circleLength = 2 * circleRadius * Math.PI;
-  const stepSize = circleLength / totalTime;
-
+  const [visibleGiveUpModal, setVisibleGiveUpModal] = useState(false);
+  const [visibleFinishedModal, setVisibleFinishedModal] = useState(false);
+  const [taskDescription, setTaskDescription] = useState('');
+  const [giveUpReason, setGiveUpReason] = useState('');
+  const [stepSize, setStepSize] = useState(circleLength / totalTime);
   const addZero = (time: number): string => {
     return time >= 10 ? `${time}` : `0${time}`
   }
+  const resetCountdown = () => {
+    setCurrentTomato(null);
+    setIsRunning(false);
+    setTomatoStatus('');
+    setTime(totalTime);
+    setMinutes('25')
+    setSeconds('00')
+    setProgress(0)
+    setVisibleGiveUpModal(false)
+    setVisibleFinishedModal(false)
+    setGiveUpReason('')
+    setTaskDescription('')
+  }
   const countdown = () => {
-    const currentTime = time - 1;
-    if(currentTime <= 0) {
+    if(time <= 0) {
+      setVisibleFinishedModal(true)
       setIsRunning(false);
-      setTime(totalTime);
-      setMinutes('25');
-      setSeconds('00');
       return;
     }
-    setTime(currentTime);
-    setMinutes(addZero(Math.floor(currentTime / 60)));
-    setSeconds(addZero(Math.floor(currentTime % 60)));
+    setMinutes(addZero(Math.floor(time / 60)));
+    setSeconds(addZero(Math.floor(time % 60)));
+    setTime(time - 1);
     setProgress(progress + stepSize)
   }
   useInterval(() => {
@@ -79,9 +103,21 @@ const CircularProgress: React.FC<IProps> = ({tomatoList}) => {
 		const duration = tomato.duration
     const timeNow = new Date().getTime()
     if (timeNow - startedAt < duration) {
-      setTime((duration - timeNow + startedAt) / 1000)
+      const time = (duration - timeNow + startedAt) / 1000;
+      setTime(time)
+      setStepSize(circleLength/time)
       setIsRunning(true)
+      setTomatoStatus('processing')
+    } else {
+      setVisibleFinishedModal(true)
     }
+  }
+
+  const postTomato = (params: any) => {
+    ajax.post('/tomatoes', params)
+      .then(res => {
+        addTomato([res.data.resource])
+      })
   }
   useEffect(() => {
     const fliterUnfinished = () => {
@@ -89,15 +125,26 @@ const CircularProgress: React.FC<IProps> = ({tomatoList}) => {
       if (unfinished) {
         setCurrentTomato(unfinished)
         startCountdown(unfinished)
+      } else {
+        resetCountdown()
       }
     }
-    fliterUnfinished()
+    fliterUnfinished();
+    // eslint-disable-next-line
   }, [tomatoList])
 
   const onPlay = () => {
-    setIsRunning(true)
+    postTomato({duration: totalTime * 1000})
   }
-
+  const submitTomato = (parmas: any) => {
+    if (currentTomato) {
+      ajax.put(`/tomatoes/${currentTomato.id}`, parmas)
+        .then(res => {
+          updateTomato(res.data.resource)
+          resetCountdown()
+        })
+    }
+  }
   const classPrefix = 'circular-progress';
   return (
     <div className={`${classPrefix}_container`}>
@@ -117,12 +164,42 @@ const CircularProgress: React.FC<IProps> = ({tomatoList}) => {
       </div>
       <div className={`${classPrefix}_control-btns`}>
         {isRunning ? (
-          <React.Fragment>
-            <img src={pauseIcon} alt="icon"/>
-            <img src={quitIcon} alt="icon"/>
-          </React.Fragment>
-        ): <img src={playIcon} alt="icon" onClick={onPlay} />}
+          <img src={quitIcon} alt="icon" onClick={() => setVisibleGiveUpModal(true)}/>
+        ) : (
+          <img src={playIcon} alt="icon" onClick={onPlay} />
+        )}
       </div>
+      <Modal
+        title="你被什么事情打断了？"
+        okText="放弃番茄"
+        cancelText="继续番茄"
+        visible={visibleGiveUpModal}
+        onOk={() => submitTomato({
+          description: giveUpReason,
+          aborted: true
+        })}
+        onCancel={() => setVisibleGiveUpModal(false)}>
+          <Input placeholder="请输入放弃番茄的原因" onChange={(e) => setGiveUpReason(e.target.value)}/>
+      </Modal>
+
+      <Modal
+        title="请输入你刚刚完成的任务"
+        okText="提交"
+        cancelText="放弃"
+        visible={visibleFinishedModal}
+        onOk={() => submitTomato({
+          description: taskDescription || giveUpReason,
+          ended_at: new Date()
+        })}
+        onCancel={() => submitTomato({
+          description: giveUpReason,
+          aborted: true
+        })}>
+          <Input
+            placeholder="请输入完成的任务或放弃的原因" onChange={
+              (e) => {setGiveUpReason(e.target.value); setTaskDescription(e.target.value);}
+            }/>
+      </Modal>
     </div>
   )
 }
@@ -130,4 +207,10 @@ const CircularProgress: React.FC<IProps> = ({tomatoList}) => {
 const mapStateToProps = (state: IState) => ({
   tomatoList: state.tomatos
 })
-export default connect(mapStateToProps)(CircularProgress);
+
+const mapDispatchToProps = (dispatch: any) => ({
+  setTomatoStatus: (status: string) => dispatch(reduxSetTomatoStatus(status)),
+  addTomato: (tomato: any) => dispatch(reduxAddTomato(tomato)),
+  updateTomato: (tomato: any) => dispatch(reduxUpdateTomato(tomato))
+})
+export default connect(mapStateToProps, mapDispatchToProps)(CircularProgress);

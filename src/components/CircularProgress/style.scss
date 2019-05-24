@@ -10,9 +10,6 @@ $class-prefix: "circular-progress";
     margin-top: 60px;
     > img {
       width: 64px;
-      & + img {
-        margin-left: 40px;
-      }
     }
   }
   &_progress {

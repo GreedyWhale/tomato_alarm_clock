@@ -4,7 +4,7 @@ import { Radio, Icon, Input } from 'antd';
 import './style.scss';
 import noRecord from '../../assets/image/no_record.svg';
 import { IState } from '../../pages/Home/types/home.d';
-import { updateTask } from '../../redux/actions/index';
+import { updateTask as reduxUpdateTask } from '../../redux/actions/index';
 import ajax from '../../methods/ajax/index';
 
 interface IProps {
@@ -32,7 +32,6 @@ const TaskList: React.FC<IProps> = ({taskList, updateTask}) => {
       newEditStatus[currentIndex] = false
     }
     newEditStatus[index] = !newEditStatus[index]
-    console.log(index, currentIndex, newEditStatus[index])
     setEditStatus(newEditStatus)
     setCurrentIndex(index)
   }
@@ -97,7 +96,7 @@ const TaskList: React.FC<IProps> = ({taskList, updateTask}) => {
 
 const mapStateToProps = (state: IState) => ({ taskList: state.tasks })
 const mapDispatchToProps = (dispatch: any) => ({
-  updateTask: (task: any[]) => dispatch(updateTask(task))
+  updateTask: (task: any[]) => dispatch(reduxUpdateTask(task))
 })
 
 
