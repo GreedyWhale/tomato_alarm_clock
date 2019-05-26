@@ -76,7 +76,6 @@ const TaskList: React.FC<IProps> = ({taskList, updateTask}) => {
                   ) : <span />} />
               </Radio>
               <div className={`${classPrefix}_item-btns`}>
-                <Icon type="play-circle" />
                 <Icon type="edit" onClick={() => updateEditStatus(index)} />
                 <Icon type="delete" onClick={() => changeTask(task.id, {deleted: true})}/>
               </div>

@@ -5,7 +5,6 @@ import { IState } from '../../pages/Home/types/home.d';
 import playIcon from '../../assets/image/play.svg';
 import quitIcon from '../../assets/image/quit.svg';
 import './style.scss';
-import { setTomatoStatus as reduxSetTomatoStatus } from '../../redux/actions/tomatoStatus';
 import { addTomato as reduxAddTomato, updateTomato as reduxUpdateTomato } from '../../redux/actions/tomato';
 import ajax from '../../methods/ajax/index';
 
@@ -30,7 +29,6 @@ const useInterval = (callback: any, delay: number | null) => {
 }
 interface IProps {
   tomatoList: any[];
-  setTomatoStatus: (status: string) => void;
   addTomato: (tomato: any) => void;
   updateTomato: (tomato: any) => void;
 }
@@ -50,10 +48,10 @@ interface ITomato {
 
 const CircularProgress: React.FC<IProps> = ({
   tomatoList,
-  setTomatoStatus, addTomato,
+  addTomato,
   updateTomato
 }) => {
-  const totalTime: number = 15;
+  const totalTime: number = 1500;
   const circleRadius = 120;
   const circleLength = 2 * circleRadius * Math.PI;
   const [progress, setProgress] = useState(0);
@@ -73,7 +71,6 @@ const CircularProgress: React.FC<IProps> = ({
   const resetCountdown = () => {
     setCurrentTomato(null);
     setIsRunning(false);
-    setTomatoStatus('');
     setTime(totalTime);
     setMinutes('25')
     setSeconds('00')
@@ -107,7 +104,6 @@ const CircularProgress: React.FC<IProps> = ({
       setTime(time)
       setStepSize(circleLength/time)
       setIsRunning(true)
-      setTomatoStatus('processing')
     } else {
       setVisibleFinishedModal(true)
     }
@@ -209,7 +205,6 @@ const mapStateToProps = (state: IState) => ({
 })
 
 const mapDispatchToProps = (dispatch: any) => ({
-  setTomatoStatus: (status: string) => dispatch(reduxSetTomatoStatus(status)),
   addTomato: (tomato: any) => dispatch(reduxAddTomato(tomato)),
   updateTomato: (tomato: any) => dispatch(reduxUpdateTomato(tomato))
 })

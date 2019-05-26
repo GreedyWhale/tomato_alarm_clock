@@ -8,10 +8,9 @@ import AlarmClock from '../../components/AlarmClock/index';
 import ajax from '../../methods/ajax/index';
 import { TOMATO_ALARM_CLOCK_X_TOKEN } from '../../methods/constant/index';
 import { initTaskList, initTomatoList } from '../../redux/actions/index';
-import { setTomatoStatus as reduxSetTomatoStatus } from '../../redux/actions/tomatoStatus';
 
 
-const Home: React.FC<RouteComponentProps | any> = ({history, initTasks, initTomatos, setTomatoStatus}) => {
+const Home: React.FC<RouteComponentProps | any> = ({history, initTasks, initTomatos}) => {
   const [username, setUsername] = useState('');
 
   useEffect(() => {
@@ -31,10 +30,9 @@ const Home: React.FC<RouteComponentProps | any> = ({history, initTasks, initToma
     fetchData();
     return () => {
       initTomatos([])
-      setTomatoStatus('')
       initTasks([])
     }
-  }, [initTomatos, setTomatoStatus, initTasks]);
+  }, [initTomatos, initTasks]);
   const logOut = () => {
     localStorage.removeItem(TOMATO_ALARM_CLOCK_X_TOKEN)
     history.replace('/login')
@@ -57,7 +55,6 @@ const Home: React.FC<RouteComponentProps | any> = ({history, initTasks, initToma
 
 const mapDispatchToProps = (dispatch: any) => ({
   initTasks: (taskList: any[]) => dispatch(initTaskList(taskList)),
-  initTomatos: (tomatoList: any[]) => dispatch(initTomatoList(tomatoList)),
-  setTomatoStatus: (status: string) => dispatch(reduxSetTomatoStatus(status)),
+  initTomatos: (tomatoList: any[]) => dispatch(initTomatoList(tomatoList))
 })
 export default connect(null, mapDispatchToProps)(Home);
