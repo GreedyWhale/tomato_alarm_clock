@@ -15,7 +15,6 @@ $class-prefix: "aside";
     display: flex;
     flex-direction: column;
     align-items: flex-end;
-    justify-content: space-between;
     text-align: right;
     &::after {
       content: '';
@@ -48,6 +47,13 @@ $class-prefix: "aside";
     font-size: 32px;
     margin-bottom: 10px;
     font-weight: 100;
+  }
+  &-menu {
+    margin: 40px 0;
+    font-size: 16px;
+    &_item {
+      margin-bottom: 20px;
+    }
   }
   &-logout {
     cursor: pointer;

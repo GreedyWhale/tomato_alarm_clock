@@ -179,7 +179,7 @@ const CircularProgress: React.FC<IProps> = ({
       </Modal>
 
       <Modal
-        title="请输入你刚刚完成的任务"
+        title="你刚刚完成了什么"
         okText="提交"
         cancelText="放弃"
         visible={visibleFinishedModal}
@@ -192,7 +192,7 @@ const CircularProgress: React.FC<IProps> = ({
           aborted: true
         })}>
           <Input
-            placeholder="请输入完成的任务或放弃的原因" onChange={
+            placeholder="请输入完成的工作或放弃的原因" onChange={
               (e) => {setGiveUpReason(e.target.value); setTaskDescription(e.target.value);}
             }/>
       </Modal>

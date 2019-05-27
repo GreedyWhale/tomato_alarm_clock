@@ -6,15 +6,29 @@ $class-prefix: "home";
     background: url('../../assets/image/home_bg.jpg') no-repeat center / cover;
     display: flex;
     align-items: center;
+    position: relative;
   }
   &-main {
     height: 100%;
     box-sizing: border-box;
-    flex: 1;
     display: flex;
     justify-content: space-around;
     background: rgba(0,0,0,.3);
+    transition: all 1s;
+    opacity: 0;
+    pointer-events: none;
     padding: 0 40px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    height: 100%;
+    width: 75%;
+    &[data-active="true"] {
+      opacity: 1;
+      pointer-events: auto;
+      z-index: 2;
+    }
     &_box {
       flex: 0 0 40%;
       display: flex;

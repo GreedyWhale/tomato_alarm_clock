@@ -5,6 +5,7 @@ import './style.scss';
 import Aside from '../../components/Aside/index';
 import Tasks from '../../components/Tasks/index';
 import AlarmClock from '../../components/AlarmClock/index';
+import Statistics from '../../components/Statistics/index';
 import ajax from '../../methods/ajax/index';
 import { TOMATO_ALARM_CLOCK_X_TOKEN } from '../../methods/constant/index';
 import { initTaskList, initTomatoList } from '../../redux/actions/index';
@@ -12,6 +13,7 @@ import { initTaskList, initTomatoList } from '../../redux/actions/index';
 
 const Home: React.FC<RouteComponentProps | any> = ({history, initTasks, initTomatos}) => {
   const [username, setUsername] = useState('');
+  const [currentPage, setCurrentPage] = useState('');
 
   useEffect(() => {
     const fetchData = async () => {
@@ -41,13 +43,12 @@ const Home: React.FC<RouteComponentProps | any> = ({history, initTasks, initToma
   return (
     <section className={`${classPrefix}-container`}>
       <Aside username={username} logOut={logOut} />
-      <main className={`${classPrefix}-main`}>
-        <div className={`${classPrefix}-main_box`}>
-          <AlarmClock />
-        </div>
-        <div className={`${classPrefix}-main_box`}>
-          <Tasks />
-        </div>
+      <main className={`${classPrefix}-main`} data-active={currentPage === 'home'}>
+        <div className={`${classPrefix}-main_box`}><AlarmClock /></div>
+        <div className={`${classPrefix}-main_box`}><Tasks /></div>
+      </main>
+      <main className={`${classPrefix}-main`} data-active='true'>
+        <Statistics />
       </main>
     </section>
   )

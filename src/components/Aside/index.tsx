@@ -16,7 +16,16 @@ const Aside: React.FC<IProps> = ({username, logOut}) => {
         <img src={logo} alt="logo" className={`${classPrefix}-logo`}/>
         <p className={`${classPrefix}-username`}>{username}</p>
       </div>
+      
+      <div className={`${classPrefix}-menu`}>
+        <div className={`${classPrefix}-menu_item`}>
+          主页
+        </div>
 
+        <div className={`${classPrefix}-menu_item`}>
+          统计
+        </div>
+      </div>
       <p className={`${classPrefix}-logout`} onClick={logOut}>Log out</p>
     </aside>
   )

@@ -1,8 +1,6 @@
 $class-prefix: "circular-progress";
 
 .#{$class-prefix} {
-  &_container {
-  }
   &_control-btns {
     display: flex;
     align-items: center;
