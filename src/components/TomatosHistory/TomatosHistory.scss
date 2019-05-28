@@ -1,0 +1,24 @@
+$classPrefix: 'tomatos-history';
+
+
+.#{$classPrefix} {
+  &_container {
+    width: 100%;
+    padding-top: 40px;
+  }
+  &_total {
+    margin-top: 30px;
+    color: #fff;
+    font-size: 20px;
+    text-align: right;
+  }
+  &_modal-item {
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    > span {
+      flex: none;
+      margin-right: 20px;
+    }
+  }
+}

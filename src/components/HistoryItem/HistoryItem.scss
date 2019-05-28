@@ -1,0 +1,44 @@
+$classPrefix: 'history-item';
+$red: rgb(233, 108, 108);
+
+.#{$classPrefix} {
+  &_container {
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+  }
+  &_desc {
+    flex: 1;
+    margin: 0 40px;
+    display: flex;
+    align-items: center;
+    .ant-input[disabled] {
+      background: transparent;
+      color: #a7b4bb;
+      border: none;
+      cursor: default;
+    }
+  }
+  &_btn {
+    border-radius: 4px;
+    border: 1px solid #fff;
+    padding: 0 20px;
+    height: 30px;
+    line-height: 30px;
+    cursor: pointer;
+    &:hover {
+      border-color: $red;
+      color: $red;
+    }
+    &:active {
+      border-color: darken($color: $red, $amount: 30%);
+      color: darken($color: $red, $amount: 30%);
+    }
+    &:last-child {
+      margin-left: 10px;
+    }
+  }
+  &_red-text {
+    color: rgb(240, 74, 74);
+  }
+}

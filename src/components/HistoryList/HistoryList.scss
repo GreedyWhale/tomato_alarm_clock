@@ -1,0 +1,49 @@
+$classPrefix: 'history';
+
+
+@mixin item {
+  margin-bottom: 20px;
+  line-height: 35px;
+  height: 35px;
+  box-sizing: border-box;
+}
+.#{$classPrefix} {
+  &-container {
+    height: 500px;
+    overflow: auto;
+  }
+  &-content {
+    background: #253239;
+    border-radius: 4px;
+    color: #a7b4bb;
+    display: flex;
+    align-items: flex-start;
+    padding: 20px;
+    padding-bottom: 0;
+    margin-bottom: 20px;
+  }
+  &-date {
+    display: flex;
+    align-items: center;
+    p:first-child {
+      margin-right: 10px;
+    }
+  }
+  &-text {
+    @include item;
+  }
+  &-strong_text {
+    font-weight: bold;
+    padding: 5px;
+    color: #ec2c64;
+  }
+  &-list {
+    flex: 1;
+    list-style: none;
+    margin: 0;
+    padding-left: 30px;
+    li {
+      @include item;
+    }
+  }
+}

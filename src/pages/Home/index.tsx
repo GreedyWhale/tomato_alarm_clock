@@ -6,6 +6,7 @@ import Aside from '../../components/Aside/index';
 import Tasks from '../../components/Tasks/index';
 import AlarmClock from '../../components/AlarmClock/index';
 import Statistics from '../../components/Statistics/index';
+import TomatosHistory from '../../components/TomatosHistory/TomatosHistory';
 import ajax from '../../methods/ajax/index';
 import { TOMATO_ALARM_CLOCK_X_TOKEN } from '../../methods/constant/index';
 import { initTaskList, initTomatoList } from '../../redux/actions/index';
@@ -47,8 +48,11 @@ const Home: React.FC<RouteComponentProps | any> = ({history, initTasks, initToma
         <div className={`${classPrefix}-main_box`}><AlarmClock /></div>
         <div className={`${classPrefix}-main_box`}><Tasks /></div>
       </main>
-      <main className={`${classPrefix}-main`} data-active='true'>
+      <main className={`${classPrefix}-main`} data-active={currentPage === 'statistics'}>
         <Statistics />
+      </main>
+      <main className={`${classPrefix}-main`} data-active='true'>
+        <TomatosHistory />
       </main>
     </section>
   )
