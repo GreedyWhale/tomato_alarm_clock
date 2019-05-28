@@ -1,0 +1,15 @@
+$classPrefix: 'tasks-history';
+
+
+.#{$classPrefix} {
+  &_container {
+    width: 100%;
+    padding-top: 40px;
+  }
+  &_total {
+    margin-top: 30px;
+    color: #fff;
+    font-size: 20px;
+    text-align: right;
+  }
+}

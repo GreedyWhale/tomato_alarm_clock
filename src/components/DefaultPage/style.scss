@@ -1,0 +1,20 @@
+$classPrefix: 'default-page';
+
+.#{$classPrefix} {
+  &_container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  &_norecord {
+    width: 100px;
+  }
+  &_norecord-tips {
+    color: #fff;
+    font-size: 30px;
+    margin-top: 30px;
+    font-weight: 200;
+  }
+}

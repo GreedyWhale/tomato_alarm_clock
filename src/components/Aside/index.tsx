@@ -27,6 +27,9 @@ const Aside: React.FC<IProps> = ({username, logOut}) => {
         <div className={`${classPrefix}-menu_item`}>
           番茄历史
         </div>
+        <div className={`${classPrefix}-menu_item`}>
+          任务历史
+        </div>
       </div>
       <p className={`${classPrefix}-logout`} onClick={logOut}>Log out</p>
     </aside>

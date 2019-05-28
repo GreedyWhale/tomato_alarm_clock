@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import './HistoryList.scss';
-import HistoryItem from '../HistoryItem/HistoryItem';
+import './style.scss';
+import HistoryItem from '../HistoryItem/index';
+import DefaultPage from '../DefaultPage/index';
 
 interface IProps {
   list: any[];
@@ -35,7 +36,12 @@ const HistoryList: React.FC<IProps> = ({list, updateMethod, type}) => {
         unit: '番茄',
         visibleTotalTime: true
       })
-      console.log(type)
+    } else if (type === 'finishedTasks') {
+      setConfig({
+        visibleTotal: true,
+        unit: '任务',
+        visibleTotalTime: false
+      })
     }
   }, [type])
   const classPrefix = 'history';
@@ -61,6 +67,7 @@ const HistoryList: React.FC<IProps> = ({list, updateMethod, type}) => {
           </ul>
         </div>
       ))}
+      {!list.length && <DefaultPage />}
     </div>
   )
 }

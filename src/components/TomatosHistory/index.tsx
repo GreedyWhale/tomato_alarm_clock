@@ -3,9 +3,9 @@ import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import { Tabs, Icon, Modal, DatePicker, Input, message } from 'antd';
 import dayjs from 'dayjs'
-import './TomatosHistory.scss';
-import { IState } from '../../pages/Home/types/home.d';
-import HistoryList from '../HistoryList/HistoryList';
+import './style.scss';
+import { IState } from '../../pages/Home/types/home';
+import HistoryList from '../HistoryList/index';
 import ajax from '../../methods/ajax/index';
 import { updateTomato as reduxUpdateTomato, addTomato as reduxAddTomato } from '../../redux/actions/tomato';
 
@@ -138,7 +138,7 @@ const TomatosHistory: React.FC<any> = ({tomatoList, updateTomato, addTomato}) =>
   const classPrefix = 'tomatos-history';
   return (
     <div className={`${classPrefix}_container`}>
-       <Tabs type='card' onChange={(e) => {setCurrentKey(e)}} tabBarExtraContent={operations}>
+      <Tabs type='card' onChange={(e) => {setCurrentKey(e)}} tabBarExtraContent={operations}>
         <TabPane tab="完成的番茄" key="finishedTomatos">
           <HistoryList list={finishedTomatos} updateMethod={modifyTomato} type="finishedTomato" />
         </TabPane>

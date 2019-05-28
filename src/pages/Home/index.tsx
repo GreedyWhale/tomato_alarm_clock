@@ -6,7 +6,8 @@ import Aside from '../../components/Aside/index';
 import Tasks from '../../components/Tasks/index';
 import AlarmClock from '../../components/AlarmClock/index';
 import Statistics from '../../components/Statistics/index';
-import TomatosHistory from '../../components/TomatosHistory/TomatosHistory';
+import TomatosHistory from '../../components/TomatosHistory/index';
+import TasksHistory from '../../components/TasksHistory/index';
 import ajax from '../../methods/ajax/index';
 import { TOMATO_ALARM_CLOCK_X_TOKEN } from '../../methods/constant/index';
 import { initTaskList, initTomatoList } from '../../redux/actions/index';
@@ -14,7 +15,7 @@ import { initTaskList, initTomatoList } from '../../redux/actions/index';
 
 const Home: React.FC<RouteComponentProps | any> = ({history, initTasks, initTomatos}) => {
   const [username, setUsername] = useState('');
-  const [currentPage, setCurrentPage] = useState('');
+  const [currentPage, setCurrentPage] = useState('tasksHistory');
 
   useEffect(() => {
     const fetchData = async () => {
@@ -51,8 +52,11 @@ const Home: React.FC<RouteComponentProps | any> = ({history, initTasks, initToma
       <main className={`${classPrefix}-main`} data-active={currentPage === 'statistics'}>
         <Statistics />
       </main>
-      <main className={`${classPrefix}-main`} data-active='true'>
+      <main className={`${classPrefix}-main`} data-active={currentPage === 'tomatosHistory'}>
         <TomatosHistory />
+      </main>
+      <main className={`${classPrefix}-main`} data-active={currentPage === 'tasksHistory'}>
+        <TasksHistory />
       </main>
     </section>
   )
