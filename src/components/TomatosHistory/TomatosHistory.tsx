@@ -15,6 +15,8 @@ const TabPane = Tabs.TabPane;
 const TomatosHistory: React.FC<any> = ({tomatoList, updateTomato, addTomato}) => {
   const [finishedTomatos, setFinishedTomatos] = useState<any[]>([]);
   const [abortedTomatos, setAbortedTomatos] = useState<any[]>([]);
+  const [finishedTotal, setFinishedTotal] = useState(0);
+  const [abortedTotal, setAbortedTotal] = useState(0);
   const [currentKey, setCurrentKey] = useState('finishedTomatos');
   const [startValue, setStartValue] = useState<any>(null);
   const [endValue, setEndValue] = useState<any>(null);
@@ -108,7 +110,8 @@ const TomatosHistory: React.FC<any> = ({tomatoList, updateTomato, addTomato}) =>
           abortedList.push(tomato);
         }
       })
-      console.log(finishedList)
+      setFinishedTotal(finishedList.length)
+      setAbortedTotal(abortedList.length)
       finished = formatTomatos(finishedList);
       aborted = formatTomatos(abortedList);
     }
@@ -122,7 +125,7 @@ const TomatosHistory: React.FC<any> = ({tomatoList, updateTomato, addTomato}) =>
     setAbortedTomatos(sortTomatos(aborted))
   }, [tomatoList])
 
-  const operations = (currentKey ? (
+  const operations = (currentKey === 'finishedTomatos' ? (
     <Icon type="plus-square"
       style={{
         fontSize: 24,
@@ -137,16 +140,16 @@ const TomatosHistory: React.FC<any> = ({tomatoList, updateTomato, addTomato}) =>
     <div className={`${classPrefix}_container`}>
        <Tabs type='card' onChange={(e) => {setCurrentKey(e)}} tabBarExtraContent={operations}>
         <TabPane tab="完成的番茄" key="finishedTomatos">
-          <HistoryList list={finishedTomatos} updateMethod={modifyTomato}/>
+          <HistoryList list={finishedTomatos} updateMethod={modifyTomato} type="finishedTomato" />
         </TabPane>
         <TabPane tab="打断记录" key="abortedTomatos">
-          123
+          <HistoryList list={abortedTomatos} updateMethod={modifyTomato} type="abortedTomata"/>
         </TabPane>
       </Tabs>
-      {(finishedTomatos.length || abortedTomatos.length )&& (
+      {(finishedTotal || abortedTotal )&& (
         <p className={`${classPrefix}_total`}>
           总计：
-          {currentKey === 'finishedTomatos' ? finishedTomatos.length : abortedTomatos.length}
+          {currentKey === 'finishedTomatos' ? finishedTotal : abortedTotal}
           个番茄
         </p>
       )}

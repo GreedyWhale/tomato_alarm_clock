@@ -1,12 +1,15 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './HistoryList.scss';
 import HistoryItem from '../HistoryItem/HistoryItem';
 
 interface IProps {
   list: any[];
   updateMethod: (id: number, params: any) => void;
+  type: string;
 }
-const HistoryList: React.FC<IProps> = ({list, updateMethod}) => {
+const HistoryList: React.FC<IProps> = ({list, updateMethod, type}) => {
+  const [config, setConfig] = useState<any>({})
+
   const getWeek = (dateStr: string): string => {
     const cnWeek = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'];
     const index = new Date(dateStr).getDay()
@@ -24,7 +27,19 @@ const HistoryList: React.FC<IProps> = ({list, updateMethod}) => {
     hours = minutes / 60;
     return `${Math.floor(hours)} 小时 ${Math.floor(minutes % 60)} 分钟`
   }
+
+  useEffect(() => {
+    if (type === 'finishedTomato') {
+      setConfig({
+        visibleTotal: true,
+        unit: '番茄',
+        visibleTotalTime: true
+      })
+      console.log(type)
+    }
+  }, [type])
   const classPrefix = 'history';
+  
   return (
     <div className={`${classPrefix}-container`}>
       {list.length && list.map((item: any) => (
@@ -34,10 +49,10 @@ const HistoryList: React.FC<IProps> = ({list, updateMethod}) => {
               <p className={`${classPrefix}-text`}>{item.dateStr}</p>
               <p className={`${classPrefix}-text`}>{getWeek(item.date)}</p>
             </div>
-            <p className={`${classPrefix}-text`}>
-              共完成了<span className={`${classPrefix}-strong_text`}>{item.subList.length}</span>个番茄
-            </p>
-            <p className={`${classPrefix}-text`}>总计&nbsp;{formatTime(item.subList)}</p>
+            {config.visibleTotal && (<p className={`${classPrefix}-text`}>
+              共完成了<span className={`${classPrefix}-strong_text`}>{item.subList.length}</span>个{config.unit}
+            </p>)}
+            {config.visibleTotalTime && <p className={`${classPrefix}-text`}>总计&nbsp;{formatTime(item.subList)}</p>}
           </div>
           <ul className={`${classPrefix}-list`}>
             {item.subList.length && item.subList.map((subItem: any) => (

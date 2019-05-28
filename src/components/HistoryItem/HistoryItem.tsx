@@ -8,8 +8,11 @@ const HistoryItem: React.FC<any> = ({item, updateMethod}) => {
   const [disabled, setDisabled] = useState(true);
   const [description, setDescription] = useState('');
   const getTime = (data: any): string => {
-    const {started_at, ended_at} = data;
-    return `${dayjs(started_at).format('HH:mm')} - ${dayjs(ended_at).format('HH:mm')}`
+    const {started_at, ended_at, created_at, updated_at } = data;
+    if(started_at && ended_at) {
+      return `${dayjs(started_at).format('HH:mm')} - ${dayjs(ended_at).format('HH:mm')}`
+    }
+    return `${dayjs(created_at).format('HH:mm')} - ${dayjs(updated_at).format('HH:mm')}`
   }
   const modifyItem = () => {
     if(disabled) {
@@ -27,7 +30,7 @@ const HistoryItem: React.FC<any> = ({item, updateMethod}) => {
       </div>
       <div className={`${classPrefix}_desc`}>
         <Input
-          value={description || (item.description || '无描述')} disabled={disabled}
+          value={description || item.description} disabled={disabled}
           onChange={(e) => setDescription(e.target.value)}
           />
         {item.manually_created && (<span className={`${classPrefix}_red-text`}>(补)</span>)}
