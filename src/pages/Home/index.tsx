@@ -15,8 +15,13 @@ import { initTaskList, initTomatoList } from '../../redux/actions/index';
 
 const Home: React.FC<RouteComponentProps | any> = ({history, initTasks, initTomatos}) => {
   const [username, setUsername] = useState('');
-  const [currentPage, setCurrentPage] = useState('tasksHistory');
-
+  const [currentPage, setCurrentPage] = useState('home');
+  const navList = [
+    {key: 'home', title: '主页'},
+    {key: 'statistics', title: '统计'},
+    {key: 'tomatosHistory', title: '番茄历史'},
+    {key: 'tasksHistory', title: '任务历史'},
+  ]
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -44,7 +49,9 @@ const Home: React.FC<RouteComponentProps | any> = ({history, initTasks, initToma
   const classPrefix = 'home';
   return (
     <section className={`${classPrefix}-container`}>
-      <Aside username={username} logOut={logOut} />
+      <Aside
+        username={username} navList={navList} logOut={logOut} currentPage={currentPage}
+        upDateCurrentPage={setCurrentPage} />
       <main className={`${classPrefix}-main`} data-active={currentPage === 'home'}>
         <div className={`${classPrefix}-main_box`}><AlarmClock /></div>
         <div className={`${classPrefix}-main_box`}><Tasks /></div>

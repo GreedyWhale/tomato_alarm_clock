@@ -53,6 +53,26 @@ $class-prefix: "aside";
     font-size: 16px;
     &_item {
       margin-bottom: 20px;
+      cursor: pointer;
+      position: relative;
+      padding-bottom: 5px;
+      &:after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        height: 2px;
+        background: #49effd;
+        width: 0;
+        transition: all 0.2s;
+        will-change: width;
+      }
+      &[data-active='true'] {
+        color: #49effd;
+        &:after {
+          width: 100%;
+        }
+      }
     }
   }
   &-logout {

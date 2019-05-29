@@ -5,9 +5,12 @@ import logo from '../../assets/image/logo.svg';
 interface IProps {
   username: string;
   logOut: () => void;
+  navList: any[];
+  currentPage: string;
+  upDateCurrentPage: (type: string) => void
 }
 
-const Aside: React.FC<IProps> = ({username, logOut}) => {
+const Aside: React.FC<IProps> = ({username, logOut, navList, currentPage, upDateCurrentPage}) => {
   const classPrefix = 'aside';
 
   return (
@@ -18,18 +21,15 @@ const Aside: React.FC<IProps> = ({username, logOut}) => {
       </div>
       
       <div className={`${classPrefix}-menu`}>
-        <div className={`${classPrefix}-menu_item`}>
-          主页
-        </div>
-        <div className={`${classPrefix}-menu_item`}>
-          统计
-        </div>
-        <div className={`${classPrefix}-menu_item`}>
-          番茄历史
-        </div>
-        <div className={`${classPrefix}-menu_item`}>
-          任务历史
-        </div>
+        {navList.length && (navList.map((nav: any) => (
+          <div
+            key={nav.key}
+            className={`${classPrefix}-menu_item`}
+            data-active={nav.key === currentPage}
+            onClick={() => upDateCurrentPage(nav.key)}>
+            {nav.title}
+          </div>
+        )))}
       </div>
       <p className={`${classPrefix}-logout`} onClick={logOut}>Log out</p>
     </aside>
